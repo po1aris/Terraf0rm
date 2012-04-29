@@ -1,14 +1,13 @@
 /************************************************************************
 *                          Game Object Class                            *
 *************************************************************************/
-
 #pragma once
-
 #include "assembly.h"
-#include <iostream>
+
 
 class GameObject
 {
+	#pragma message ("Game Object is included")
 public:
 		GameObject();
 		void virtual Destroy();
@@ -23,8 +22,17 @@ public:
 		void setX(float x) {GameObject::x = x;}
 		void setY(float y) {GameObject::y = y;}
 
+		void setBoundX(float boundx) {GameObject::boundX = x;}
+		void setBoundY(float boundy) {GameObject::boundY = y;}
+
 		int getBoundX() {return boundX;}
 		int getBoundY() {return boundY;}
+
+		void setVelX(float velX) {GameObject::velX = velX;}
+		void setVelY(float velY) {GameObject::velY = velY;}
+
+		int getVelX() {return velX;}
+		int getVelY() {return velY;}
 
 		int getID() {return mID;}
 		void setID(int ID) {GameObject::mID = ID;}
@@ -35,7 +43,18 @@ public:
 		bool getCollideable() {return mIsCollidable;}
 		void setCollideable(bool collideable) {GameObject::mIsCollidable = collideable;}
 
-		bool checkCollisions(GameObject *otherObject);
+		int getDirection() {return Direction;}
+		void setDirection(int newDirection) {GameObject::Direction = newDirection;}
+
+		void resetAnimation(int position);
+
+		int getCurFrame() {return curFrame;}
+		void setcurFrame(int newFrame) {curFrame = newFrame;}
+
+		void setFramWidth(int newFrameWidth) {GameObject::frameWidth = newFrameWidth;}
+		void setFrameHeight(int newFrameHeight) {GameObject::frameHeight = newFrameHeight;}
+
+		bool checkCollisions(GameObject *OtherObject);
 		void virtual Collided(int objectID);
 		bool Collidable();
 
@@ -60,7 +79,12 @@ protected:
 		int frameWidth;
 		int frameHeight;
 		int animationColumns;
-		int animationDirection;
+		int animationRow;
+
+		int mTotalHeight;
+		int mTotalWidth;
+
+		int Direction;
 
 		ALLEGRO_BITMAP *image;
 private:
@@ -70,4 +94,5 @@ private:
 		bool mIsAlive;
 		//Check to see if the object is collideable
 		bool mIsCollidable;
+
 };

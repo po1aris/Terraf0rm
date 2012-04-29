@@ -21,12 +21,17 @@ GameObject::GameObject()
 	frameWidth = 0;
 	frameHeight = 0;
 	animationColumns = 0;
-	animationDirection = 0;
+	animationRow = 0;
+
+	Direction = RIGHT;
 
 	image = NULL;
 
 	mIsAlive = true;
 	mIsCollidable = true;
+
+	mTotalHeight = widthHeight(1);
+	mTotalWidth = widthHeight(0);
 }
 
 void GameObject::Destroy()
@@ -61,14 +66,27 @@ void GameObject::Render()
 {
 
 }
-
-bool GameObject::checkCollisions(GameObject *otherObject)
+void GameObject::resetAnimation(int position)
 {
-	float oX = otherObject->getX();
-	float oY = otherObject->getY();
+	if (position == 1)
+	{
+		animationRow = 1;
+		dirY = 0;
+	}
+	else 
+	{
+		curFrame = 0;
+		dirX = 0;
+	}
+}
 
-	int obX = otherObject->getBoundX();
-	int obY = otherObject->getBoundY();
+bool GameObject::checkCollisions(GameObject *OtherObject)
+{
+	float oX = OtherObject->getX();
+	float oY = OtherObject->getY();
+
+	int obX = OtherObject->getBoundX();
+	int obY = OtherObject->getBoundY();
 
 	if (x + boundX > oX - obX && x - boundX < oX + obX && y + boundY > oY - obY && y - boundY < oY + obY)
 		return true;
